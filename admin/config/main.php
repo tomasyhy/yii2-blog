@@ -9,17 +9,22 @@ $params = array_merge(
 return [
     'id' => 'app-backend',
     'basePath' => dirname(__DIR__),
-    'controllerNamespace' => 'backend\controllers',
+    'controllerNamespace' => 'admin\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'user' => [
+            'class' => 'dektrium\user\Module',
+            'enablePasswordRecovery' => false,
+            'enableRegistration' => false,
+            'admins' => ['admin'],
+            'urlPrefix' => '',
+        ],
+        'rbac' => 'dektrium\rbac\RbacWebModule',
+    ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
-        ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'baseUrl' => '/admin',
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -37,14 +42,13 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-            ],
+            ]
         ],
-        */
+
     ],
     'params' => $params,
 ];

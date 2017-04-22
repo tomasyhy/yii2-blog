@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use admin\components\HyperlinkElements;
 use Yii;
 
 /**
@@ -15,6 +16,8 @@ use Yii;
  */
 class Tag extends \yii\db\ActiveRecord
 {
+    const SUBJECT_NAME = 'tag';
+
     /**
      * @inheritdoc
      */
@@ -29,8 +32,8 @@ class Tag extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title'], 'required'],
-            [['title'], 'string', 'max' => 45],
+            [['name'], 'required'],
+            [['name'], 'string', 'max' => 45],
         ];
     }
 
@@ -41,7 +44,7 @@ class Tag extends \yii\db\ActiveRecord
     {
         return [
             'id' => Yii::t('app', 'ID'),
-            'title' => Yii::t('app', 'Title'),
+            'name' => Yii::t('app', 'Name'),
         ];
     }
 
@@ -60,6 +63,24 @@ class Tag extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Post::className(), ['id' => 'post_id'])->viaTable('post_tag', ['tag_id' => 'id']);
     }
+
+    /**
+     * @return HyperlinkElements
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getHyperlinkElements()
+    {
+        return Yii::$container->get(HyperlinkElements::className());
+    }
+
+//    public function isPublished(): bool
+//    {
+//        if ($this->enabled === self::PUBLISHED) {
+//            return true;
+//        } else {
+//            return false;
+//        }
+//    }
 
     /**
      * @inheritdoc

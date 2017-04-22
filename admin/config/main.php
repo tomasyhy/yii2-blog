@@ -7,10 +7,16 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-backend',
+    'id' => 'app-admin',
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'admin\controllers',
     'bootstrap' => ['log'],
+    'layout' => '@app/views/layouts/main',
+    'aliases' => [
+        '@admin' => '@common/../admin'
+    ],
+    'name' => 'Blog',
+    'defaultRoute' => 'post',
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
@@ -18,13 +24,28 @@ return [
             'enableRegistration' => false,
             'admins' => ['admin'],
             'urlPrefix' => '',
+            'controllerMap' => [
+                'security' => [
+                    'class' => 'admin\controllers\SecurityController',
+                    'layout' => '@admin/views/layouts/login.php',
+                ],
+            ],
         ],
-        'rbac' => 'dektrium\rbac\RbacWebModule',
+        'noty' => [
+            'class' => 'lo\modules\noty\Module',
+        ],
     ],
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
             'baseUrl' => '/admin',
+        ],
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views/security' => '@admin/views/site',
+                ],
+            ],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
@@ -45,7 +66,10 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'scriptUrl' => '/admin/index.php',
             'rules' => [
+                '<controller>' => '<controller>/index',
+                '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
             ]
         ],
 

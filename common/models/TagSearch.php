@@ -19,7 +19,7 @@ class TagSearch extends Tag
     {
         return [
             [['id'], 'integer'],
-            [['title'], 'safe'],
+            [['name'], 'safe'],
         ];
     }
 
@@ -47,6 +47,10 @@ class TagSearch extends Tag
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['name' => SORT_ASC]],
+            'pagination' => [
+                'pageSize' => 10,
+            ],
         ]);
 
         $this->load($params);
@@ -62,7 +66,7 @@ class TagSearch extends Tag
             'id' => $this->id,
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

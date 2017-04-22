@@ -1,41 +1,53 @@
 <?php
 
-use yii\helpers\Html;
+use yii\helpers\{Html, StringHelper};
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Comment */
 
-$this->title = $model->id;
+$this->title = StringHelper::truncateWords(strip_tags($model->content), 3);
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Comments'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="comment-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-search font-dark"></i>
+                    <span class="caption-subject font-dark bold uppercase"><?= Html::encode($this->title) ?></span>
+                </div>
+            </div>
+            <div class="portlet-body">
+                <div class="comment-view">
 
-    <p>
-        <?= Html::a(Yii::t('app', 'Update'), ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a(Yii::t('app', 'Delete'), ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => Yii::t('app', 'Are you sure you want to delete this item?'),
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
+                    <?= DetailView::widget([
+                        'model' => $model,
+                        'attributes' => [
+                            [
+                                'label' => Yii::t('app', 'Post'),
+                                'format' => 'raw',
+                                'value' => function ($comment) {
+                                    return Html::a($comment->post->title,['/post/update', 'id' => $comment->post_id]);
+                                },
+                            ],
+                            'content:ntext',
+                            'author',
+                            'email:email',
+                            'created_at',
+                            [
+                                'label' => Yii::t('app', 'Is Published'),
+                                'value' => $model->isPublished() ? Yii::t('app', 'Yes') : Yii::t('app', 'No'),
+                            ],
+                        ],
+                    ]) ?>
+                    <?= Html::a('Back', ['index'], ['class'=>'btn btn-default']) ?>
+                </div>
+            </div>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'post_id',
-            'content:ntext',
-            'author',
-            'email:email',
-            'created_at',
-            'enabled',
-        ],
-    ]) ?>
-
+        </div>
+    </div>
 </div>
+

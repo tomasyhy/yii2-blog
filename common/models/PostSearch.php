@@ -18,7 +18,7 @@ class PostSearch extends Post
     public function rules()
     {
         return [
-            [['id', 'enabled'], 'integer'],
+            [['id', 'status'], 'integer'],
             [['title', 'content', 'created_at'], 'safe'],
         ];
     }
@@ -47,6 +47,10 @@ class PostSearch extends Post
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+            'pagination' => [
+                'pageSize' => 10 ,
+            ],
         ]);
 
         $this->load($params);
@@ -61,7 +65,7 @@ class PostSearch extends Post
         $query->andFilterWhere([
             'id' => $this->id,
             'created_at' => $this->created_at,
-            'enabled' => $this->enabled,
+            'status' => $this->status,
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])

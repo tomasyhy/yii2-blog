@@ -3,6 +3,8 @@ RewriteEngine On
 # End the processing, if a rewrite already occurred
 RewriteRule ^(frontend|admin)/web/ - [L]
 
+RewriteRule ^(theme) - [L]
+
 # Handle the case of panel, skip ([S=1]) the following rule, if current matched
 RewriteRule ^admin(/(.*))?$ admin/web/$2 [S=1]
 
@@ -13,3 +15,5 @@ RewriteRule .* frontend/web/$0
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^([^/]+/web)/.*$ $1/index.php
+
+

@@ -2,12 +2,21 @@
 
 namespace admin\controllers;
 
+use admin\components\{
+    Confirmation
+};
+use common\models\{
+    Post, PostSearch
+};
+use dektrium\user\filters\AccessRule;
+use yii\web\{
+    NotFoundHttpException, Controller
+};
+use yii\filters\{
+    VerbFilter, AccessControl
+};
 use Yii;
-use common\models\Post;
-use common\models\PostSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+
 
 /**
  * PostController implements the CRUD actions for Post model.
@@ -20,13 +29,27 @@ class PostController extends Controller
     public function behaviors()
     {
         return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'ruleConfig' => [
+                    'class' => AccessRule::className(),
+                ],
+                'rules' => [
+                    [
+                        'actions' => ['index', 'create', 'update', 'delete', 'change-status'],
+                        'allow' => true,
+                        'roles' => ['admin'],
+                    ],
+                ],
+            ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'delete' => ['POST'],
+                    'change-status' => ['POST'],
                 ],
             ],
         ];
+
     }
 
     /**
@@ -45,18 +68,6 @@ class PostController extends Controller
     }
 
     /**
-     * Displays a single Post model.
-     * @param integer $id
-     * @return mixed
-     */
-    public function actionView($id)
-    {
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-        ]);
-    }
-
-    /**
      * Creates a new Post model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
@@ -64,10 +75,16 @@ class PostController extends Controller
     public function actionCreate()
     {
         $model = new Post();
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been created successfully'));
+                return $this->redirect(['/post']);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred during creating post'));
+            }
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
         } else {
+
             return $this->render('create', [
                 'model' => $model,
             ]);
@@ -84,8 +101,14 @@ class PostController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been updated successfully'));
+                return $this->redirect(['/post']);
+            } else {
+                Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred during updating post'));
+            }
+
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -101,9 +124,38 @@ class PostController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if ($this->findModel($id)->delete()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been deleted successfully'));
+            return 'success';
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred during deleting post'));
+            return 'error';
+        }
+    }
 
-        return $this->redirect(['index']);
+    public function actionChangeStatus($id)
+    {
+        $post = $this->findModel($id);
+        if ($post->isPublished()) {
+            $post->status = Post::NOT_PUBLISHED;
+            $successMessage = 'Post has been removed successfully';
+            $errorMessage = 'An error occurred during removing post';
+        } else {
+            $post->status = Post::PUBLISHED;
+            $successMessage = 'Post has been published successfully';
+            $errorMessage = 'An error occurred during publication post';
+        }
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        if ($post->save()) {
+            Yii::$app->session->setFlash('success', Yii::t('app', $successMessage));
+            return 'success';
+        } else {
+            Yii::$app->session->setFlash('error', Yii::t('app', $errorMessage));
+            return 'error';
+        }
+
     }
 
     /**

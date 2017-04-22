@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use admin\components\HyperlinkElements;
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -11,7 +13,7 @@ use Yii;
  * @property string $title
  * @property string $content
  * @property string $created_at
- * @property integer $enabled
+ * @property integer $status
  *
  * @property Comment[] $comments
  * @property PostTag[] $postTags
@@ -19,6 +21,10 @@ use Yii;
  */
 class Post extends \yii\db\ActiveRecord
 {
+    const NOT_PUBLISHED = 0;
+    const PUBLISHED = 1;
+    const SUBJECT_NAME = 'post';
+
     /**
      * @inheritdoc
      */
@@ -33,10 +39,9 @@ class Post extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['title', 'content', 'created_at'], 'required'],
+            [['title', 'content'], 'required'],
             [['content'], 'string'],
-            [['created_at'], 'safe'],
-            [['enabled'], 'integer'],
+            [['status'], 'integer'],
             [['title'], 'string', 'max' => 100],
         ];
     }
@@ -51,8 +56,26 @@ class Post extends \yii\db\ActiveRecord
             'title' => Yii::t('app', 'Title'),
             'content' => Yii::t('app', 'Content'),
             'created_at' => Yii::t('app', 'Created At'),
-            'enabled' => Yii::t('app', 'Enabled'),
+            'updated_at' => Yii::t('app', 'Updated At'),
+            'status' => Yii::t('app', 'Status'),
         ];
+    }
+
+    /** @inheritdoc */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @return HyperlinkElements
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getHyperlinkElements()
+    {
+        return Yii::$container->get(HyperlinkElements::className());
     }
 
     /**
@@ -87,4 +110,19 @@ class Post extends \yii\db\ActiveRecord
     {
         return new PostQuery(get_called_class());
     }
+
+    public function isPublished(): bool
+    {
+        if ($this->status === self::PUBLISHED) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function getStatusesDropDowwnList(): array
+    {
+        return [self::PUBLISHED => 'Published', self::NOT_PUBLISHED => 'Not published'];
+    }
+
 }

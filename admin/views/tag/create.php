@@ -10,12 +10,23 @@ $this->title = Yii::t('app', 'Create Tag');
 $this->params['breadcrumbs'][] = ['label' => Yii::t('app', 'Tags'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tag-create">
+<div class="row">
+    <div class="col-md-12">
+        <div class="portlet light bordered">
+            <div class="portlet-title">
+                <div class="caption">
+                    <i class="fa fa-plus-square font-dark"></i>
+                    <span class="caption-subject font-dark bold uppercase"><?= Html::encode($this->title) ?></span>
+                </div>
+            </div>
+            <div class="tag-create">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+                <?= $this->render('_form', [
+                    'model' => $model,
+                ]) ?>
 
-    <?= $this->render('_form', [
-        'model' => $model,
-    ]) ?>
+            </div>
+        </div>
 
+    </div>
 </div>

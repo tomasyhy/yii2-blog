@@ -101,9 +101,9 @@ a.desc:after {
     border: none;
 }
 
-@media(max-width:767px) {
+@media (max-width: 767px) {
     .nav li > form > button.logout {
-        display:block;
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 15px;
@@ -117,4 +117,35 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+.login .content .form-actions {
+    border-bottom: none !important;
+    padding-bottom: 0px !important;
+}
+
+.login .content {
+    padding-top: 30px !important;
+}
+
+.nav li.link a {
+    padding: 29px 12px 24px;
+    color: #737a99;
+}
+
+.nav li.link a:hover {
+    background-color: #3f4457;
+}
+
+.page-logo a {
+    color: #737a99;
+    display: block;
+    position: relative;
+    padding: 25px 12px 24px;
+    font-size: 18px;
+}
+
+.page-logo a:hover {
+    background-color: #3f4457;
+    text-decoration: none;
 }

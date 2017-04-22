@@ -11,8 +11,10 @@ class m170107_124753_create_table_post extends Migration
             'id' => Schema::TYPE_INTEGER . ' UNSIGNED AUTO_INCREMENT PRIMARY KEY',
             'title' => Schema::TYPE_STRING . '(100) NOT NULL',
             'content' => Schema::TYPE_TEXT . ' NOT NULL',
-            'created_at' => Schema::TYPE_DATE . ' NOT NULL',
-            'enabled' => Schema::TYPE_BOOLEAN . ' DEFAULT 0',
+            'created_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'updated_at' => Schema::TYPE_INTEGER . ' NOT NULL',
+            'status' => Schema::TYPE_BOOLEAN . ' DEFAULT 0',
+
         ]);
 
     }

@@ -2,6 +2,8 @@
 
 namespace common\models;
 
+use admin\components\HyperlinkElements;
+use yii\behaviors\TimestampBehavior;
 use Yii;
 
 /**
@@ -23,6 +25,10 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+    const NOT_PUBLISHED = 0;
+    const PUBLISHED = 1;
+    const SUBJECT_NAME = 'comment';
+
     /**
      * @inheritdoc
      */
@@ -60,6 +66,32 @@ class Comment extends \yii\db\ActiveRecord
             'created_at' => Yii::t('app', 'Created At'),
             'enabled' => Yii::t('app', 'Enabled'),
         ];
+    }
+
+    /** @inheritdoc */
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
+    /**
+     * @return HyperlinkElements
+     * @throws \yii\base\InvalidConfigException
+     */
+    protected function getHyperlinkElements()
+    {
+        return Yii::$container->get(HyperlinkElements::className());
+    }
+
+    public function isPublished(): bool
+    {
+        if ($this->enabled === self::PUBLISHED) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**

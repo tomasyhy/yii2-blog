@@ -43,6 +43,8 @@ class PostSearch extends Post
     {
         $query = Post::find();
 
+//        $query->joinWith(['post_tag'])
+
         // add conditions that should always apply here
 
         $dataProvider = new ActiveDataProvider([
@@ -69,7 +71,8 @@ class PostSearch extends Post
         ]);
 
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content]);
+            ->andFilterWhere(['like', 'content', $this->content])
+        ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

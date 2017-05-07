@@ -11,6 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'name' => 'Blog',
     'components' => [
         'user' => [
             'identityClass' => 'dektrium\user\Module',
@@ -38,6 +39,11 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
+            'rules' => [
+                '/tag/<tag>' => 'site/index',
+                '<controller>' => '<controller>/index',
+                '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
+            ],
         ],
     ],
     'params' => $params,

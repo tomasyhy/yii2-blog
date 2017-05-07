@@ -15,6 +15,8 @@ use Yii;
  */
 class PostTag extends \yii\db\ActiveRecord
 {
+    public $tags;
+
     /**
      * @inheritdoc
      */
@@ -70,5 +72,15 @@ class PostTag extends \yii\db\ActiveRecord
     public static function find()
     {
         return new PostTagQuery(get_called_class());
+    }
+
+    public function updateTags(int $postId) {
+        Yii::$app
+            ->db
+            ->createCommand()
+            ->delete('post_tag', ['post_id' => $postId])
+            ->execute();
+
+        return $this->save();
     }
 }

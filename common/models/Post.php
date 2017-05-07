@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\helpers\ArrayHelper;
 use admin\components\HyperlinkElements;
 use yii\behaviors\TimestampBehavior;
 use Yii;
@@ -100,6 +101,12 @@ class Post extends \yii\db\ActiveRecord
     public function getTags()
     {
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->viaTable('post_tag', ['post_id' => 'id']);
+    }
+
+    public function getTagsId(): array {
+        return array_map(function($tag) {
+            return $tag->id;
+        }, $this->tags);
     }
 
     /**

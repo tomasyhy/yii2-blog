@@ -6,7 +6,7 @@ use admin\components\{
     Confirmation
 };
 use common\models\{
-    Post, PostSearch
+    Post, PostSearch, PostTag
 };
 use dektrium\user\filters\AccessRule;
 use yii\web\{
@@ -100,9 +100,10 @@ class PostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
+        $postTagModel = new PostTag();
+        $postTagModel->tags = $model->getTagsId();
+        if ($model->load(Yii::$app->request->post()) && $postTagModel->load(Yii::$app->request->post())) {
+            if ($model->save() && $postTagModel->updateTags($id)) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been updated successfully'));
                 return $this->redirect(['/post']);
             } else {
@@ -112,6 +113,7 @@ class PostController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'postTagModel' => $postTagModel
             ]);
         }
     }

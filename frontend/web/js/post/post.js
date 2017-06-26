@@ -1,8 +1,5 @@
 $(document).ready(function () {
 
     hljs.initHighlightingOnLoad();
-    $('#summernote').summernote({
-        height: 500,
-    });
 
 });

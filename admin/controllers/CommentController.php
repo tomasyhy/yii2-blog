@@ -87,11 +87,11 @@ class CommentController extends Controller
     {
         $comment = $this->findModel($id);
         if ($comment->isPublished()) {
-            $comment->status = Comment::NOT_PUBLISHED;
-            $successMessage = 'Comment has been removed successfully';
+            $comment->enabled = Comment::NOT_PUBLISHED;
+            $successMessage = 'Comment and dependencies has been removed successfully';
             $errorMessage = 'An error occurred during removing comment';
         } else {
-            $comment->status = Comment::PUBLISHED;
+            $comment->enabled = Comment::PUBLISHED;
             $successMessage = 'Comment has been published successfully';
             $errorMessage = 'An error occurred during publication comment';
         }

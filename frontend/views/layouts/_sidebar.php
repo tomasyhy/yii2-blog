@@ -7,14 +7,14 @@ use common\models\Tag;
     <?php
 
     foreach (Tag::getAllWithQuantity() as $tag) {
-        $menuItems[] = ['label' => $tag['name'] . " ({$tag['quantity']})", 'url' => ['site/index', 'tag' => $tag['name']], 'options' => ['role' => 'presentation']];
+        $menuItems[] = ['label' => $tag['name'] . " ({$tag['quantity']})", 'url' => ['site/index', 'tag' => strtolower($tag['name'])], 'options' => ['role' => 'presentation']];
     }
 
     echo Menu::widget([
         'encodeLabels' => false,
         'items' =>
             $menuItems,
-        'options' => ['class' => 'nav nav-pills'],
+        'options' => ['class' => 'nav nav-pills nav-stacked'],
 //        'linkTemplate' => '<a href="{url}" class="nav-link">{label}</a>',
     ]);
     ?>

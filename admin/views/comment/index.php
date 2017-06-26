@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 return Html::a('<span class="' . $comment->hyperlinkElements->getStatusIcon($comment) . '"></span>', $url, [
                                                     'title' => $comment->hyperlinkElements->getStatusTitle($comment),
                                                     'class' => 'btn btn-icon-only hidden-xs hidden-sm ajax-action ' . $comment->hyperlinkElements->getStatusColor($comment),
-                                                    'data-element' => 'post-grid',
+                                                    'data-element' => 'comment-grid',
                                                     'data-confirmation' => $comment->hyperlinkElements->getChangeStatusConfirmation($comment)
                                                 ]);
                                             },

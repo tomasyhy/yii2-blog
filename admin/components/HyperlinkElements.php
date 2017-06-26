@@ -8,10 +8,14 @@ use Yii;
 use yii\db\ActiveRecord;
 
 /**
- * Generates confirmations messages for acton models
+ * Generates confirmations messages for action models using $model $model::SUBJECT_NAME
  */
 class HyperlinkElements extends Component
 {
+    /**
+     * @param ActiveRecord $model
+     * @return string
+     */
     public function getChangeStatusConfirmation(ActiveRecord $model): string
     {
         if ($model->isPublished()) {
@@ -22,6 +26,10 @@ class HyperlinkElements extends Component
         return Yii::t('app', $text, [$model::SUBJECT_NAME]);
     }
 
+    /**
+     * @param ActiveRecord $model
+     * @return string
+     */
     public function getStatusIcon(ActiveRecord $model): string
     {
         if ($model->isPublished()) {
@@ -31,6 +39,10 @@ class HyperlinkElements extends Component
         }
     }
 
+    /**
+     * @param ActiveRecord $model
+     * @return string
+     */
     public function getStatusTitle(ActiveRecord $model): string
     {
         if ($model->isPublished()) {
@@ -41,6 +53,10 @@ class HyperlinkElements extends Component
         return Yii::t('app', $text);
     }
 
+    /**
+     * @param ActiveRecord $model
+     * @return string
+     */
     public function getStatusColor(ActiveRecord $model): string
     {
         if ($model->isPublished()) {
@@ -50,6 +66,10 @@ class HyperlinkElements extends Component
         }
     }
 
+    /**
+     * @param ActiveRecord $model
+     * @return string
+     */
     public function getDeleteConfirmation(ActiveRecord $model): string
     {
         return Yii::t('app', 'Are you sure you want to delete {0}?', [$model::SUBJECT_NAME]);

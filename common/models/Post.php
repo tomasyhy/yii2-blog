@@ -103,9 +103,21 @@ class Post extends \yii\db\ActiveRecord
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->viaTable('post_tag', ['post_id' => 'id']);
     }
 
+    /**
+     * @return array
+     */
     public function getTagsId(): array {
         return array_map(function($tag) {
             return $tag->id;
+        }, $this->tags);
+    }
+
+    /**
+     * @return array
+     */
+    public function getTagsName(): array {
+        return array_map(function($tag) {
+            return $tag->name;
         }, $this->tags);
     }
 
@@ -118,6 +130,9 @@ class Post extends \yii\db\ActiveRecord
         return new PostQuery(get_called_class());
     }
 
+    /**
+     * @return bool
+     */
     public function isPublished(): bool
     {
         if ($this->status === self::PUBLISHED) {
@@ -127,9 +142,20 @@ class Post extends \yii\db\ActiveRecord
         }
     }
 
-    public function getStatusesDropDowwnList(): array
+    /**
+     * @return array
+     */
+    public function getStatusesDropDownList(): array
     {
         return [self::PUBLISHED => 'Published', self::NOT_PUBLISHED => 'Not published'];
     }
+
+    /**
+     * @return array|\yii\db\ActiveRecord[]
+     */
+    public function getRootPostComments() {
+        return $this->getComments()->select(['id', 'content', 'author', 'email', 'created_at', 'count' => 'count(*)'])->joinWith('commentTreesByDescendant', false, 'INNER JOIN')->where(['enabled' => Comment::PUBLISHED])->groupBy('comment.id')->having('count = 1')->all();
+    }
+
 
 }

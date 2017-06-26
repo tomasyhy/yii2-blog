@@ -76,16 +76,22 @@ class Tag extends \yii\db\ActiveRecord
         return Yii::$container->get(HyperlinkElements::className());
     }
 
+    /**
+     * @return array
+     */
     public function getAllWithQuantity(): array
     {
         return self::find()
             ->select(['COUNT(*) AS quantity', 'name'])
             ->from('tag')
-            ->leftJoin('post_tag', 'post_tag.tag_id = tag.id')
+            ->join('join','post_tag', 'post_tag.tag_id = tag.id')
             ->groupBy('tag.id')
             ->all();
     }
 
+    /**
+     * @return array
+     */
     public function getAllTagsName() {
         return ArrayHelper::map(self::find()->all(), 'id', 'name');
     }

@@ -6,11 +6,11 @@ use common\models\{
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
+use admin\assets\{SummernoteAsset, HighlightAsset};
 
+SummernoteAsset::register($this);
+HighlightAsset::register($this);
 
-/* @var $this yii\web\View */
-/* @var $model common\models\Post */
-/* @var $form yii\widgets\ActiveForm */
 ?>
 
 <div class="post-form">
@@ -35,7 +35,7 @@ use yii\bootstrap\ActiveForm;
         ])->label(Yii::t('app', 'Tags'), ['class' => 'control-label col-sm-1'])
         ?>
 
-        <?= $form->field($model, 'status', ['template' => '{label}<div class="col-sm-4">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->dropDownList(Post::getStatusesDropDowwnList()) ?>
+        <?= $form->field($model, 'status', ['template' => '{label}<div class="col-sm-4">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->dropDownList(Post::getStatusesDropDownList()) ?>
 
         <?= $form->field($model, 'content', ['template' => '{label}<div class="col-sm-10">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->textarea(['class' => 'form-control', 'id' => 'summernote']) ?>
     </div>

@@ -7,7 +7,6 @@ use common\assets\CommonAsset;
 use yii\helpers\Html;
 use yii\web\View;
 
-CommonAsset::register($this);
 ThemeLoginAsset::register($this);
 AdminAsset::register($this)
 
@@ -30,16 +29,17 @@ AdminAsset::register($this)
     <?php $this->head() ?>
 </head>
 
-<body class="login">
-
+<body>
 
 <?php $this->beginBody() ?>
 <div class="content">
+    <div class="col-lg-5"></div>
+    <div class="col-lg-2">
     <?= $content ?>
+    </div>
+    <div class="col-lg-5"></div>
 </div>
 
-
-<div class="copyright"> Copyright © <?php echo date('Y') . ' ' .  Yii::$app->params['owner'] ; ?> </div>
 
 <?php $this->endBody() ?>
 </body>

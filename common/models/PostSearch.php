@@ -41,7 +41,6 @@ class PostSearch extends Post
      */
     public function search($params)
     {
-        var_dump($params);
         $query = Post::find();
 
         $searchByTag = isset($params['tag']) ? true : false;
@@ -54,16 +53,10 @@ class PostSearch extends Post
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-//            'pagination' => [
-//                'pageSize' => 4,
-//            ],
+
         ]);
 
-//        $this->load($params);
-
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
             return $dataProvider;
         }
 

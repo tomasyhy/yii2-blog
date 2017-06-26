@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use yii\helpers\ArrayHelper;
 use admin\components\HyperlinkElements;
 use Yii;
 
@@ -17,6 +18,8 @@ use Yii;
 class Tag extends \yii\db\ActiveRecord
 {
     const SUBJECT_NAME = 'tag';
+
+    public $quantity;
 
     /**
      * @inheritdoc
@@ -73,14 +76,25 @@ class Tag extends \yii\db\ActiveRecord
         return Yii::$container->get(HyperlinkElements::className());
     }
 
-//    public function isPublished(): bool
-//    {
-//        if ($this->enabled === self::PUBLISHED) {
-//            return true;
-//        } else {
-//            return false;
-//        }
-//    }
+    /**
+     * @return array
+     */
+    public function getAllWithQuantity(): array
+    {
+        return self::find()
+            ->select(['COUNT(*) AS quantity', 'name'])
+            ->from('tag')
+            ->join('join','post_tag', 'post_tag.tag_id = tag.id')
+            ->groupBy('tag.id')
+            ->all();
+    }
+
+    /**
+     * @return array
+     */
+    public function getAllTagsName() {
+        return ArrayHelper::map(self::find()->all(), 'id', 'name');
+    }
 
     /**
      * @inheritdoc

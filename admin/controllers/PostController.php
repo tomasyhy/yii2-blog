@@ -6,7 +6,7 @@ use admin\components\{
     Confirmation
 };
 use common\models\{
-    Post, PostSearch
+    Post, PostSearch, PostTag
 };
 use dektrium\user\filters\AccessRule;
 use yii\web\{
@@ -23,6 +23,8 @@ use Yii;
  */
 class PostController extends Controller
 {
+
+    const PAGE_SIZE = 10;
     /**
      * @inheritdoc
      */
@@ -60,6 +62,7 @@ class PostController extends Controller
     {
         $searchModel = new PostSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = self::PAGE_SIZE;
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -74,6 +77,7 @@ class PostController extends Controller
      */
     public function actionCreate()
     {
+        $postTagModel = new PostTag();
         $model = new Post();
         if ($model->load(Yii::$app->request->post())) {
             if ($model->save()) {
@@ -82,11 +86,11 @@ class PostController extends Controller
             } else {
                 Yii::$app->session->setFlash('error', Yii::t('app', 'An error occurred during creating post'));
             }
-
         } else {
 
             return $this->render('create', [
                 'model' => $model,
+                'postTagModel' => $postTagModel
             ]);
         }
     }
@@ -100,9 +104,10 @@ class PostController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
+        $postTagModel = new PostTag();
+        $postTagModel->tags = $model->getTagsId();
+        if ($model->load(Yii::$app->request->post()) && $postTagModel->load(Yii::$app->request->post())) {
+            if ($model->save() && $postTagModel->updateTags($id, Yii::$app->request->post())) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been updated successfully'));
                 return $this->redirect(['/post']);
             } else {
@@ -112,6 +117,7 @@ class PostController extends Controller
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'postTagModel' => $postTagModel
             ]);
         }
     }

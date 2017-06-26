@@ -15,6 +15,8 @@ use Yii;
  */
 class PostTag extends \yii\db\ActiveRecord
 {
+    public $tags = [];
+
     /**
      * @inheritdoc
      */
@@ -70,5 +72,30 @@ class PostTag extends \yii\db\ActiveRecord
     public static function find()
     {
         return new PostTagQuery(get_called_class());
+    }
+
+    public function updateTags(int $postId, $post)
+    {
+        $newTagsIds = $post['PostTag']['tags'] ?: [];
+        $currentTagsIds = $this->tags;
+
+        $idsToDelete = array_diff($currentTagsIds, $newTagsIds);
+        $idsToAdd = array_diff($newTagsIds, $currentTagsIds);
+
+        $transaction = $this->getDb()->beginTransaction();
+
+        try {
+            Yii::$app->db->createCommand()->delete('post_tag', ['post_id' => $postId, 'tag_id' => $idsToDelete])->execute();
+
+            foreach ($idsToAdd as $id) {
+                Yii::$app->db->createCommand()->insert('post_tag', ['post_id' => $postId, 'tag_id' => $id])->execute();
+            }
+            $transaction->commit();
+            return true;
+        } catch (\Exception $e) {
+            $transaction->rollBack();
+            return false;
+        }
+
     }
 }

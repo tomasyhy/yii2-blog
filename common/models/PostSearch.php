@@ -41,19 +41,25 @@ class PostSearch extends Post
      */
     public function search($params)
     {
+        var_dump($params);
         $query = Post::find();
 
-        // add conditions that should always apply here
+        $searchByTag = isset($params['tag']) ? true : false;
+
+
+        if($searchByTag) {
+            $query->joinWith(['postTags', 'postTags.tag']);
+        }
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
             'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
-            'pagination' => [
-                'pageSize' => 10 ,
-            ],
+//            'pagination' => [
+//                'pageSize' => 4,
+//            ],
         ]);
 
-        $this->load($params);
+//        $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -68,8 +74,11 @@ class PostSearch extends Post
             'status' => $this->status,
         ]);
 
+        $searchByTag ? $query->andWhere(['tag.name' => $params['tag']]) : null;
+
         $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content]);
+            ->andFilterWhere(['like', 'content', $this->content])
+        ->andFilterWhere(['like', 'content', $this->content]);
 
         return $dataProvider;
     }

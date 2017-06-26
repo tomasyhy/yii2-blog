@@ -8,7 +8,7 @@ use admin\components\FlashMessage;
 
 use common\assets\CommonAsset;
 use admin\assets\{
-    AdminAsset, ThemeAdminAsset
+    AdminAsset
 };
 use kartik\dialog\Dialog;
 use lo\modules\noty\Wrapper;
@@ -20,7 +20,6 @@ use yii\widgets\Breadcrumbs;
 
 CommonAsset::register($this);
 AdminAsset::register($this);
-ThemeAdminAsset::register($this);
 
 
 ?>

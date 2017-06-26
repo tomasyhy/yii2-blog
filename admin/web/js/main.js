@@ -12,10 +12,14 @@ $(document).ready(function () {
                         url: button.attr('href'),
                         dataType: "json"
                     }
-                ).success(function (response) {
+                ).done(function (response) {
                     if (response == 'success') {
                         $.pjax.reload({container: '#' + element + '-pjax'});
+                    } else if (response == 'error') {
+                        alert('error');
                     }
+                }).fail(function () {
+                    alert('An error occurred');
                 });
             }
         });

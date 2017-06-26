@@ -10,6 +10,7 @@ class m170107_132045_create_table_comment_tree extends Migration
         $this->createTable('{{%comment_tree}}', [
             'ancestor' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
             'descendant' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
+            'depth' => Schema::TYPE_INTEGER . ' UNSIGNED NOT NULL',
         ]);
 
         $this->addForeignKey('fk_comment_tree_comment_ancestor', '{{%comment_tree}}', 'ancestor', '{{%comment}}', 'id', 'CASCADE');

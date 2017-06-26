@@ -22,7 +22,9 @@
         "dektrium/yii2-rbac": "1.0.0-alpha@dev",
         "kartik-v/yii2-dialog": "@dev",
         "loveorigami/yii2-notification-wrapper": "*",
-        "bower-asset/toastr": "^2.1"
+        "bower-asset/toastr": "^2.1",
+        "summernote/summernote": "^0.8.4",
+        "components/highlightjs": "^9.12"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

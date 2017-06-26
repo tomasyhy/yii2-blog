@@ -23,6 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="post-create">
                     <?= $this->render('_form', [
                         'model' => $model,
+                        'postTagModel' => $postTagModel,
                     ]) ?>
 
                 </div>

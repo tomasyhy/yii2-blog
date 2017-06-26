@@ -4,6 +4,7 @@ namespace common\models;
 
 use admin\components\HyperlinkElements;
 use yii\behaviors\TimestampBehavior;
+use yii\db\Expression;
 use Yii;
 
 /**
@@ -28,6 +29,7 @@ class Comment extends \yii\db\ActiveRecord
     const NOT_PUBLISHED = 0;
     const PUBLISHED = 1;
     const SUBJECT_NAME = 'comment';
+    const FIRST_LEVEL_DESCENDANT = 1;
 
     /**
      * @inheritdoc
@@ -43,10 +45,11 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['post_id', 'content', 'author', 'email', 'created_at'], 'required'],
+            [['post_id', 'content', 'author', 'email'], 'required'],
             [['post_id', 'enabled'], 'integer'],
             [['content'], 'string'],
             [['created_at'], 'safe'],
+            ['email', 'email'],
             [['author', 'email'], 'string', 'max' => 45],
             [['post_id'], 'exist', 'skipOnError' => true, 'targetClass' => Post::className(), 'targetAttribute' => ['post_id' => 'id']],
         ];
@@ -68,11 +71,15 @@ class Comment extends \yii\db\ActiveRecord
         ];
     }
 
-    /** @inheritdoc */
     public function behaviors()
     {
         return [
-            TimestampBehavior::className(),
+            [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'created_at',
+                'updatedAtAttribute' => false,
+                'value' => new Expression('NOW()'),
+            ]
         ];
     }
 
@@ -85,6 +92,9 @@ class Comment extends \yii\db\ActiveRecord
         return Yii::$container->get(HyperlinkElements::className());
     }
 
+    /**
+     * @return bool
+     */
     public function isPublished(): bool
     {
         if ($this->enabled === self::PUBLISHED) {
@@ -105,7 +115,7 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentTrees()
+    public function getCommentTreesByAncestor()
     {
         return $this->hasMany(CommentTree::className(), ['ancestor' => 'id']);
     }
@@ -113,7 +123,7 @@ class Comment extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getCommentTrees0()
+    public function getCommentTreesByDescendant()
     {
         return $this->hasMany(CommentTree::className(), ['descendant' => 'id']);
     }
@@ -135,6 +145,15 @@ class Comment extends \yii\db\ActiveRecord
     }
 
     /**
+     * @return array|Comment[]
+     */
+    public function getFirstLevelDescendants()
+    {
+        return $this->find()->select('*')->joinWith('commentTreesByDescendant')->where(['comment_tree.ancestor' => $this->id, 'comment_tree.depth' => Comment::FIRST_LEVEL_DESCENDANT, 'enabled' => Comment::PUBLISHED])->all();
+
+    }
+
+    /**
      * @inheritdoc
      * @return CommentQuery the active query used by this AR class.
      */
@@ -142,4 +161,32 @@ class Comment extends \yii\db\ActiveRecord
     {
         return new CommentQuery(get_called_class());
     }
+
+    /**
+     * @param CommentTree $commentTree
+     * @return bool
+     */
+    public function saveCommentWithTree(CommentTree $commentTree): bool
+    {
+        $transaction = Yii::$app->getDb()->beginTransaction();
+        try {
+            $this->enabled = Comment::PUBLISHED;
+            if (!$this->save()) {
+                return false;
+            }
+
+            if (!$commentTree->saveTree($this->id)) {
+                return false;
+            }
+
+            $transaction->commit();
+            return true;
+        } catch (\Throwable $e) {
+            $transaction->rollBack();
+            Yii::error($e->getMessage());
+            return false;
+        }
+
+    }
+
 }

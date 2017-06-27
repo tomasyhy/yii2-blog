@@ -6,19 +6,16 @@
 use admin\components\FlashMessage;
 
 
-use common\assets\CommonAsset;
 use admin\assets\{
     AdminAsset
 };
 use kartik\dialog\Dialog;
 use lo\modules\noty\Wrapper;
-use yii\helpers\ArrayHelper;
 
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 
 
-CommonAsset::register($this);
 AdminAsset::register($this);
 
 
@@ -39,48 +36,47 @@ AdminAsset::register($this);
     <meta name="MobileOptimized" content="320">
     <?php $this->head() ?>
 </head>
-<body class="page-container-bg-solid page-header-fixed page-sidebar-closed-hide-logo page-md">
+<body>
 <?php $this->beginBody() ?>
+<div class="wrap">
+    <?= Wrapper::widget([
+        'layerClass' => 'lo\modules\noty\layers\Toastr',
+    ]); ?>
 
-<?= Wrapper::widget([
-    'layerClass' => 'lo\modules\noty\layers\Toastr',
-]); ?>
-
-<?= Dialog::widget(
-    [
-        'options' => [
-            'closable' => true,
-            'type' => Dialog::DIALOG_PROMPT, // bootstrap contextual color
-            'btnOKClass' => 'btn green',
-            'btnCancelClass' => 'btn dark btn-outline',
+    <?= Dialog::widget(
+        [
+            'options' => [
+                'closable' => true,
+                'type' => Dialog::TYPE_DEFAULT,
+                'btnOKClass' => 'btn btn-success',
+                'btnCancelClass' => 'btn btn-default',
+            ]
         ]
-    ]
-); ?>
-<?= $this->render('//layouts/_header'); ?>
+    ); ?>
 
-<div class="clearfix"></div>
+    <?= $this->render('//layouts/_header'); ?>
 
-<div class="page-container">
+    <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-2 sidenav">
+                <?= $this->render('//layouts/_side-menu'); ?>
+            </div>
 
-    <?= $this->render('//layouts/_side-menu'); ?>
-
-    <div class="page-content-wrapper">
-        <div class="page-content">
-            <?=
-            Breadcrumbs::widget([
-                'itemTemplate' => "<li>{link}\n<i class=\"fa fa-circle\"></i></li>\n",
-                'options' => ['class' => 'page-breadcrumb breadcrumb'],
-                'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-            ]);
-            ?>
-            <?= $content ?>
+            <div class="col-sm-10">
+                <?=
+                Breadcrumbs::widget([
+                    'itemTemplate' => "<li>{link}\n<i class=\"fa fa-circle\"></i></li>\n",
+                    'options' => ['class' => 'page-breadcrumb breadcrumb'],
+                    'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
+                ]);
+                ?>
+                <?= $content ?>
+            </div>
         </div>
     </div>
 </div>
-
 <?= $this->render('//layouts/_footer'); ?>
 
 <?php $this->endBody() ?>
-</body>
 </html>
 <?php $this->endPage() ?>

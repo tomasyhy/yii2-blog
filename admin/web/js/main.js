@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $('.page-content').on('click', 'a.ajax-action', function (event) {
+    $('.panel-body').on('click', 'a.ajax-action', function (event) {
         event.preventDefault();
         var button = $(this);
         var element = $(this).data('element');

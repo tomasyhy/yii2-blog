@@ -1,24 +1,37 @@
 <?php
 
-use yii\helpers\Url;
+use yii\bootstrap\Nav;
+use yii\bootstrap\NavBar;
 
 ?>
 
-<div class="page-header navbar navbar-fixed-top">
-    <div class="page-header-inner ">
-        <div class="page-logo">
-            <a href="<?= Url::to(['/post']) ?>">
-                Administration panel
-            </a>
-        </div>
-        <div class="page-top">
-            <div class="top-menu">
-                <ul class="nav navbar-nav pull-right">
-                    <li class="link">
-                        <a href="<?= Url::to(['/logout']) ?>" data-method="post" >Log Out</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
+<?php
+NavBar::begin([
+    'options' => [
+        'class' => 'navbar navbar-inverse',
+    ],
+    'renderInnerContainer' => false,
+]);
+?>
+<div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="<?= \yii\helpers\Url::to(['/']) ?>">Administration Panel</a>
+    </div>
+    <div>
+        <?php
+        echo Nav::widget([
+            'options' => ['class' => 'navbar-nav navbar-right'],
+            'items' => [
+                ['label' => 'Blog', 'url' => \Yii::$app->urlManagerFrontEnd->createUrl('')],
+                ['label' => 'Log Out', 'url' => ['/logout'], 'linkOptions' => ['data-method' => 'post']],
+            ],
+        ]);
+        ?>
+
     </div>
 </div>
+<?php
+NavBar::end();
+?>
+

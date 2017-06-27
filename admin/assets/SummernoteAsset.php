@@ -16,4 +16,10 @@ class SummernoteAsset extends AssetBundle {
     public $js = [
         'summernote.min.js',
     ];
+
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
+//        'yii\bootstrap\BootstrapPluginAsset',
+    ];
 }

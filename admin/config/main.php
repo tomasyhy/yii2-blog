@@ -11,7 +11,7 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'admin\controllers',
     'bootstrap' => ['log'],
-    'layout' => '@app/views/layouts/main',
+//    'layout' => '@app/views/layouts/main',
     'aliases' => [
         '@admin' => '@common/../admin'
     ],
@@ -26,7 +26,7 @@ return [
             'urlPrefix' => '',
             'controllerMap' => [
                 'security' => [
-                    'class' => 'admin\controllers\SecurityController',
+                    'class' => 'dektrium\user\controllers\SecurityController',
                     'layout' => '@admin/views/layouts/login.php',
                 ],
             ],
@@ -71,6 +71,12 @@ return [
                 '<controller>' => '<controller>/index',
                 '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
             ]
+        ],
+        'urlManagerFrontEnd' => [
+            'class' => 'yii\web\urlManager',
+            'baseUrl' => '',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
         ],
 
     ],

@@ -4,8 +4,7 @@ use yii\widgets\Menu;
 
 ?>
 
-<div class="page-sidebar-wrapper">
-    <div class="page-sidebar navbar-collapse collapse">
+
 
         <?=
         Menu::widget([
@@ -15,12 +14,10 @@ use yii\widgets\Menu;
                 ['label' => '<i class="icon-note"></i>&nbsp;<span class="title">' . Yii::t('app', 'Comments') . '</span>', 'url' => ['comment/index'], 'options' => ['class' => 'nav-item']],
                 ['label' => '<i class="icon-pin"></i>&nbsp;<span class="title">' . Yii::t('app', 'Tags') . '</span>', 'url' => ['tag/index'], 'options' => ['class' => 'nav-item']],
             ],
-            'options' => ['class' => 'page-sidebar-menu', 'data-keep-expanded' => 'false', 'data-auto-scroll' => 'true', 'data-slide-speed'=> 200],
-            'linkTemplate' => '<a href="{url}" class="nav-link">{label}</a>',
+            'options' => ['class' => 'nav nav-pills nav-stacked'],
+            'linkTemplate' => '<a href="{url}">{label}</a>',
         ]);
         ?>
 
-    </div>
-</div>
 
             

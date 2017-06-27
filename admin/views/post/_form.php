@@ -13,7 +13,6 @@ HighlightAsset::register($this);
 
 ?>
 
-<div class="post-form">
     <?php $form = ActiveForm::begin(
         [
             'enableClientValidation' => true,
@@ -37,7 +36,7 @@ HighlightAsset::register($this);
 
         <?= $form->field($model, 'status', ['template' => '{label}<div class="col-sm-4">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->dropDownList(Post::getStatusesDropDownList()) ?>
 
-        <?= $form->field($model, 'content', ['template' => '{label}<div class="col-sm-10">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->textarea(['class' => 'form-control', 'id' => 'summernote']) ?>
+        <?= $form->field($model, 'content', ['template' => '{label}<div class="col-sm-11">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->textarea(['class' => 'form-control', 'id' => 'summernote']) ?>
     </div>
 
 
@@ -52,5 +51,4 @@ HighlightAsset::register($this);
 
     <?php ActiveForm::end(); ?>
 
-</div>
 <?php $this->registerJsFile('admin/js/post.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>

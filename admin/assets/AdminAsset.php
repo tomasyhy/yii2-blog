@@ -17,8 +17,13 @@ class AdminAsset extends AssetBundle
         'css/site.css',
     ];
 
+    public $depends = [
+        'yii\web\YiiAsset',
+        'yii\bootstrap\BootstrapAsset',
+    ];
+
     public $js = [
-        ['js/main.js', 'position' => \yii\web\View::POS_BEGIN],
+        ['js/main.js', 'position' => \yii\web\View::POS_END],
     ];
 
 }

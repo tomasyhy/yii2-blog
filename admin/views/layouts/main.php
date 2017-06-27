@@ -47,15 +47,14 @@ AdminAsset::register($this);
         [
             'options' => [
                 'closable' => true,
-                'type' => Dialog::DIALOG_PROMPT, // bootstrap contextual color
-                'btnOKClass' => 'btn green',
-                'btnCancelClass' => 'btn dark btn-outline',
+                'type' => Dialog::TYPE_DEFAULT,
+                'btnOKClass' => 'btn btn-success',
+                'btnCancelClass' => 'btn btn-default',
             ]
         ]
     ); ?>
 
     <?= $this->render('//layouts/_header'); ?>
-
 
     <div class="container-fluid">
         <div class="row content">

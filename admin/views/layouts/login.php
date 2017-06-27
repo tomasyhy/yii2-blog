@@ -1,14 +1,9 @@
 <?php
 
-use admin\assets\{ThemeLoginAsset, AdminAsset};
-use common\assets\CommonAsset;
-
-
+use admin\assets\{AdminAsset};
 use yii\helpers\Html;
-use yii\web\View;
 
-ThemeLoginAsset::register($this);
-AdminAsset::register($this)
+AdminAsset::register($this);
 
 ?>
 
@@ -20,7 +15,6 @@ AdminAsset::register($this)
     <?= Html::csrfMetaTags() ?>
     <link rel="icon" type="image/x-icon" href="<?php echo Yii::$app->urlManager->baseUrl; ?>/images/test/favicon.ico"/>
     <title><?= Html::encode($this->title) ?></title>
-    <!--    <title>--><?php //echo isset($this->pageTitle) ? Yii::$app->name . $this->pageTitle : Yii::$app->name; ?><!--</title>-->
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="" name="description"/>
     <meta content="" name="author"/>

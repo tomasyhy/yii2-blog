@@ -31,14 +31,21 @@ class SiteController extends SecurityController
             ],
         ];
     }
-    
-    public function actionError()
+
+    /**
+     * @inheritdoc
+     */
+    public function actions()
     {
-        $this->layout = 'error';
-        $exception = Yii::$app->errorHandler->exception;
-        if ($exception !== null) {
-            return $this->render('error', ['exception' => $exception]);
-        }
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+        ];
     }
 
 }

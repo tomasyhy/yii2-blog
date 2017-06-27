@@ -149,3 +149,7 @@ a.desc:after {
     background-color: #3f4457;
     text-decoration: none;
 }
+
+td a {
+    padding: 4px;
+}

@@ -33,9 +33,9 @@ class HyperlinkElements extends Component
     public function getStatusIcon(ActiveRecord $model): string
     {
         if ($model->isPublished()) {
-            return 'icon-check';
+            return 'glyphicon glyphicon-ok-circle';
         } else {
-            return 'icon-ban';
+            return 'glyphicon glyphicon-remove-circle';
         }
     }
 

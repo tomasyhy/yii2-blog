@@ -8,28 +8,25 @@ use yii\widgets\ActiveForm;
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
-<div class="tag-form">
+<?php $form = ActiveForm::begin(
+    [
+        'enableClientValidation' => true,
+        'options' => ['class' => 'form-horizontal', 'role' => 'form']
 
-    <?php $form = ActiveForm::begin(
-        [
-            'enableClientValidation' => true,
-            'options' => ['class' => 'form-horizontal', 'role' => 'form']
+    ]
+); ?>
+<div class="form-body">
+    <?= $form->field($model, 'name', ['template' => '{label}<div class="col-sm-4">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-1']])->textInput(['maxlength' => true]) ?>
+</div>
 
-        ]
-    ); ?>
-    <div class="form-body">
-        <?= $form->field($model, 'name', ['template' => '{label}<div class="col-sm-4">{input}{error}{hint}</div>', 'labelOptions' => ['class' => 'control-label col-md-2']])->textInput(['maxlength' => true]) ?>
-    </div>
-
-    <div class="form-actions">
-        <div class="row">
-            <div class="col-md-offset-2 col-md-10">
-                <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>
-                <?= Html::a('Cancel', ['index'], ['class'=>'btn btn-default']) ?>
-            </div>
+<div class="form-actions">
+    <div class="row">
+        <div class="col-md-offset-1 col-md-11">
+            <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>
+            <?= Html::a('Cancel', ['index'], ['class' => 'btn btn-default']) ?>
         </div>
     </div>
-
-    <?php ActiveForm::end(); ?>
-
 </div>
+
+<?php ActiveForm::end(); ?>
+

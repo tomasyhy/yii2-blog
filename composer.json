@@ -19,7 +19,6 @@
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dektrium/yii2-user": "0.9.*@dev",
-        "dektrium/yii2-rbac": "1.0.0-alpha@dev",
         "kartik-v/yii2-dialog": "@dev",
         "loveorigami/yii2-notification-wrapper": "*",
         "bower-asset/toastr": "^2.1",

@@ -4,8 +4,7 @@
 /* @var $content string */
 
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
+
 use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 
@@ -24,48 +23,29 @@ AppAsset::register($this);
 <body>
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-2 col-lg-2">
+            <?= $this->render('//layouts/_sidebar'); ?>
+        </div>
 
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-left'],
-        'items' => $menuItems,
-    ]);
-    NavBar::end();
-    ?>
-    <div class="container">
-        <div class="row">
-            <div class="col-sm-8 blog-main">
+        <div class="col-sm-10 col-lg-10">
+
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]) ?>
                 <?= $content ?>
 
 
-            </div>
-            <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-                <?= $this->render('//layouts/_sidebar'); ?>
-            </div>
-
         </div>
 
     </div>
+
+
 </div>
 
-<footer class="footer">
-    <div class="container">
-        <p class="pull-left"> Copyright © <?php echo date('Y') . ' ' .  Yii::$app->params['owner'] ; ?> </p>
-    </div>
-</footer>
+
+
 
 <?php $this->endBody() ?>
 </body>

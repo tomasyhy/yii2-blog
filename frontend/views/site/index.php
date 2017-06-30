@@ -1,35 +1,30 @@
 <?php
 
+use frontend\assets\TimelineAsset;
 use yii\widgets\ListView;
 
 /* @var $this yii\web\View */
+TimelineAsset::register($this);
 
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
+<div class="blog-main">
+    <?php
 
-<!--    <div class="jumbotron">-->
-<!--        <h1>Web developing </h1>-->
-<!---->
-<!--    </div>-->
+    echo ListView::widget([
+        'dataProvider' => $dataProvider,
+        'summary' => '',
+        'itemView' => '_post-brief',
+        'pager' => [
+            'firstPageLabel' => 'first',
+            'lastPageLabel' => 'last',
+            'prevPageLabel' => 'previous',
+            'nextPageLabel' => 'next',
+        ],
+        'itemOptions' => [
+            'tag' => false,
+        ],
+    ])
+    ?>
 
-    <div class="body-content">
-
-                    <?php
-
-            echo ListView::widget([
-                'dataProvider' => $dataProvider,
-                'summary'=>'',
-                'itemView' => '_post-brief',
-                'pager' => [
-                    'firstPageLabel' => 'first',
-                    'lastPageLabel' => 'last',
-                    'prevPageLabel' => 'previous',
-                    'nextPageLabel' => 'next',
-                ],
-            ])
-            ?>
-
-
-    </div>
 </div>

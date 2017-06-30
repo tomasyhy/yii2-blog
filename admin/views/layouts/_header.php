@@ -9,7 +9,7 @@ use yii\bootstrap\NavBar;
 <?php
 NavBar::begin([
     'options' => [
-        'class' => 'navbar navbar-inverse',
+        'class' => 'navbar navbar-inverse text-center navbar-static-top',
     ],
     'renderInnerContainer' => false,
 ]);

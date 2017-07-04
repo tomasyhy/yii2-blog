@@ -16,7 +16,7 @@ NavBar::begin([
 ]]);
 ?>
         <?php
-
+        $menuItems = [];
         foreach (Tag::getAllWithQuantity() as $tag) {
             $menuItems[] = ['label' => $tag['name'] . " ({$tag['quantity']})", 'url' => ['site/index', 'tag' => strtolower($tag['name'])]];
         }

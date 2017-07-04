@@ -44,12 +44,12 @@ use yii\widgets\ActiveForm;
 
             <div class="form-actions">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-md-3">
                         <?= Html::submitButton(Yii::t('app', 'Add Comment'), ['class' => 'btn btn-sm btn-success']) ?>
                     </div>
 
                     <?php if ($ancestorId): ?>
-                        <div class="col-md-2">
+                        <div class="col-md-3">
                             <?= Html::button(Yii::t('app', 'Cancel'), ['class' => 'btn btn-sm btn-warning hide-form']) ?>
                         </div>
                     <?php endif; ?>

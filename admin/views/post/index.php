@@ -13,14 +13,16 @@ use yii\widgets\Pjax;
 $this->title = Yii::t('app', 'Posts');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<h2><?= Html::encode($this->title) ?></h2>
+<h2><?= Html::encode($this->title) ?>
+    <div class="pull-right">
+        <a href="<?= Url::to(['create']); ?>"
+           class="btn btn-success show-modal"><?= Yii::t('app', 'Create') ?></a>
+
+    </div>
+</h2>
 <hr>
     <div class="panel-body">
-            <div class="pull-right">
-                <a href="<?= Url::to(['create']); ?>"
-                   class="btn btn-success show-modal"><?= Yii::t('app', 'Create') ?></a>
 
-            </div>
 
 
             <?php Pjax::begin(['enablePushState' => false, 'id' => 'post-grid-pjax']); ?>

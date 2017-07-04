@@ -1,9 +1,9 @@
 $(document).ready(function () {
 
-        $('.blog-main').on('click', ".hide-form", function (event) {
+        $('.comments-content').on('click', ".hide-form", function (event) {
             makeAction($(this), event);
         });
-        $('.blog-main').on('click', ".show-form", function (event) {
+        $('.comments-content').on('click', ".show-form", function (event) {
             makeAction($(this), event);
 
         });

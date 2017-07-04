@@ -20,6 +20,7 @@
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dektrium/yii2-user": "0.9.*@dev",
         "kartik-v/yii2-dialog": "@dev",
+        "kartik-v/yii2-widget-select2": "@dev",
         "loveorigami/yii2-notification-wrapper": "*",
         "bower-asset/toastr": "^2.1",
         "summernote/summernote": "^0.8.4",

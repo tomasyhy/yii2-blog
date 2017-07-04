@@ -17,7 +17,7 @@ AppAsset::register($this);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>        <?= Yii::$app->params['appName'] ?? Yii::$app->name ?></title>
     <?php $this->head() ?>
 </head>
 <body>
@@ -30,18 +30,14 @@ AppAsset::register($this);
         </div>
 
         <div class="col-sm-10 col-lg-10">
-
+            <div class="col-lg-10 col-lg-offset-1 site-view">
                 <?= Breadcrumbs::widget([
                     'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
                 ]) ?>
                 <?= $content ?>
-
-
+            </div>
         </div>
-
     </div>
-
-
 </div>
 
 

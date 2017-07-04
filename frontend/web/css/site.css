@@ -119,7 +119,7 @@ a.desc:after {
 }
 
 ul.media-list .media-left {
-    font-size: 30px;
+    font-size: 17px;
 }
 
 .hide {
@@ -135,25 +135,23 @@ ul.media-list .media-left {
 }
 
 .blog-main {
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-top: 10px;
 }
 
-.post-content {
-    padding-left: 50px;
-    padding-right: 50px;
+.blog-main .label {
+    font-size: 75% !important;
 }
 
-.blog-main .label, .post-content .label{
-    font-size: 100% !important;
+/* PAGINATION */
+
+.pagination .active a {
+    background-color: #FF6B6B !important;
+    border-color: #FF6B6B !important;
+    color: #fff !important;
 }
 
-.post-content .panel-body {
-    font-size: 18px;
-}
-
-.post-content .panel {
-    box-shadow: none !important;
+.pagination a {
+    color: #FF6B6B !important;
 }
 
 .footer {
@@ -162,6 +160,18 @@ ul.media-list .media-left {
     position: absolute;
     bottom: 0;
 }
+
+.site-view p {
+    color: #768390 !important;
+
+}
+
+.site-view .panel {
+    box-shadow: none !important;
+
+}
+
+/* SIDEBAR */
 
 @media (max-width: 768px) {
     .navbar-fixed-side {

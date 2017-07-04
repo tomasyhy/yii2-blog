@@ -12,6 +12,6 @@ class TimelineAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/timeline.css',
+        'css/dual-timeline.css',
     ];
 }

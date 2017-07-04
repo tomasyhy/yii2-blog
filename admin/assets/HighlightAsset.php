@@ -9,10 +9,11 @@ class HighlightAsset extends AssetBundle {
     public $sourcePath = '@vendor/components/highlightjs';
 
     public $css = [
-        'styles/ocean.css',
+        'styles/github.css',
     ];
 
     public $js = [
         'highlight.pack.min.js',
     ];
+
 }

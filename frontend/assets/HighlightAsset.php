@@ -15,4 +15,5 @@ class HighlightAsset extends AssetBundle {
     public $js = [
         'highlight.pack.min.js',
     ];
+
 }

@@ -79,8 +79,9 @@ class PostController extends Controller
     {
         $postTagModel = new PostTag();
         $model = new Post();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->save()) {
+        $dataPOST = Yii::$app->request->post();
+        if ($model->load($dataPOST) && $postTagModel->load($dataPOST)) {
+            if ($model->save() && $postTagModel->saveTags($model->id, $dataPOST)) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been created successfully'));
                 return $this->redirect(['/post']);
             } else {
@@ -106,8 +107,9 @@ class PostController extends Controller
         $model = $this->findModel($id);
         $postTagModel = new PostTag();
         $postTagModel->tags = $model->getTagsId();
-        if ($model->load(Yii::$app->request->post()) && $postTagModel->load(Yii::$app->request->post())) {
-            if ($model->save() && $postTagModel->updateTags($id, Yii::$app->request->post())) {
+        $dataPOST = Yii::$app->request->post();
+        if ($model->load($dataPOST) && $postTagModel->load($dataPOST)) {
+            if ($model->save() && $postTagModel->saveTags($id, $dataPOST)) {
                 Yii::$app->session->setFlash('success', Yii::t('app', 'Post has been updated successfully'));
                 return $this->redirect(['/post']);
             } else {

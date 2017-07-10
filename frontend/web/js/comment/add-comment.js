@@ -1,6 +1,6 @@
 $(document).ready(function () {
     var commentFormClass = '.comment-form';
-    $('.blog-main').on('beforeSubmit', commentFormClass, function (event) {
+    $('.comments-content').on('submit', commentFormClass, function (event) {
         event.preventDefault();
         var commentForm = $(this).closest(commentFormClass);
         $.ajax({
@@ -19,9 +19,7 @@ $(document).ready(function () {
             alert('An error occurred');
         });
         return false;
-    }).on('submit', function(e){
-            e.preventDefault();
-        });
+    });
 
 
 });

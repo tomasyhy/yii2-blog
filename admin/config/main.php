@@ -11,7 +11,6 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'admin\controllers',
     'bootstrap' => ['log'],
-//    'layout' => '@app/views/layouts/main',
     'aliases' => [
         '@admin' => '@common/../admin'
     ],

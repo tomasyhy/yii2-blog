@@ -154,7 +154,12 @@ class Post extends \yii\db\ActiveRecord
      * @return array|\yii\db\ActiveRecord[]
      */
     public function getRootPostComments() {
-        return $this->getComments()->select(['id', 'content', 'author', 'email', 'created_at', 'count' => 'count(*)'])->joinWith('commentTreesByDescendant', false, 'INNER JOIN')->where(['enabled' => Comment::PUBLISHED])->groupBy('comment.id')->having('count = 1')->all();
+        return $this->getComments()->select(['id', 'content', 'author', 'email', 'created_at', 'count' => 'count(*)'])
+            ->joinWith('commentTreesByDescendant', false, 'INNER JOIN')
+            ->where(['enabled' => Comment::PUBLISHED])
+            ->groupBy('comment.id')
+            ->having('count = 1')
+            ->all();
     }
 
 

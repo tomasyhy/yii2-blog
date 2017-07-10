@@ -28,8 +28,7 @@ AdminAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?= Html::csrfMetaTags() ?>
     <link rel="icon" type="image/x-icon" href="<?php echo Yii::$app->urlManager->baseUrl; ?>/images/test/favicon.ico"/>
-    <title>
-        <?php echo Yii::$app->name . ' - ' . $this->title; ?></title>
+    <title><?php echo Yii::$app->name . ' - ' . $this->title; ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="" name="description"/>
     <meta content="" name="author"/>

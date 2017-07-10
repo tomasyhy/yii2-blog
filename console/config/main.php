@@ -12,7 +12,6 @@ return [
     'bootstrap' => ['log'],
     'controllerNamespace' => 'console\controllers',
     'modules' => [
-        'rbac' => 'dektrium\rbac\RbacConsoleModule',
         'user' => [
             'class' => 'dektrium\user\Module',
         ],

@@ -74,7 +74,12 @@ class PostTag extends \yii\db\ActiveRecord
         return new PostTagQuery(get_called_class());
     }
 
-    public function updateTags(int $postId, $post)
+    /**
+     * @param int $postId
+     * @param $post
+     * @return bool
+     */
+    public function saveTags(int $postId, $post)
     {
         $newTagsIds = $post['PostTag']['tags'] ?: [];
         $currentTagsIds = $this->tags;

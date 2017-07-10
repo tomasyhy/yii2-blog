@@ -141,6 +141,12 @@ class SiteController extends Controller
         Yii::$app->response->format = Response::FORMAT_JSON;
 
         if (Yii::$app->request->isAjax && $comment->load($post) && $commentTree->load($post) && $comment->validate() && $comment->saveCommentWithTree($commentTree)) {
+            Yii::$app->mailer->compose()
+                ->setTo(Yii::$app->params['adminEmail'])
+                ->setFrom([$post['Comment']['email'] => $post['Comment']['author']])
+                ->setSubject('Comment')
+                ->setTextBody($post['Comment']['content'])
+                ->send();
             return ['status' => 'success'];
         }
 

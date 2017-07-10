@@ -16,8 +16,15 @@
     "require": {
         "php": ">=5.4.0",
         "yiisoft/yii2": "~2.0.6",
-        "yiisoft/yii2-bootstrap": "~2.0.0",
-        "yiisoft/yii2-swiftmailer": "~2.0.0"
+        "yiisoft/yii2-bootstrap": "*",
+        "yiisoft/yii2-swiftmailer": "~2.0.0",
+        "dektrium/yii2-user": "0.9.*@dev",
+        "kartik-v/yii2-dialog": "@dev",
+        "kartik-v/yii2-widget-select2": "@dev",
+        "loveorigami/yii2-notification-wrapper": "*",
+        "bower-asset/toastr": "^2.1",
+        "summernote/summernote": "^0.8.4",
+        "components/highlightjs": "^9.12"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

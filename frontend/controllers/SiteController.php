@@ -3,14 +3,14 @@ namespace frontend\controllers;
 
 use Yii;
 use yii\base\InvalidParamException;
-use yii\web\BadRequestHttpException;
+use yii\bootstrap\ActiveForm;
+use yii\web\Response;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
-use frontend\models\PasswordResetRequestForm;
-use frontend\models\ResetPasswordForm;
-use frontend\models\SignupForm;
+use common\models\{
+    Comment, CommentTree, PostSearch, Post
+};
 use frontend\models\ContactForm;
 
 /**
@@ -18,6 +18,8 @@ use frontend\models\ContactForm;
  */
 class SiteController extends Controller
 {
+    const PAGE_SIZE = 10;
+
     /**
      * @inheritdoc
      */
@@ -26,24 +28,18 @@ class SiteController extends Controller
         return [
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['logout', 'signup'],
+                'only' => ['index'],
                 'rules' => [
                     [
-                        'actions' => ['signup'],
+                        'actions' => ['index'],
                         'allow' => true,
                         'roles' => ['?'],
-                    ],
-                    [
-                        'actions' => ['logout'],
-                        'allow' => true,
-                        'roles' => ['@'],
                     ],
                 ],
             ],
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -72,40 +68,31 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $searchModel = new PostSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->pagination->pageSize = self::PAGE_SIZE;
+
+        return $this->render('index', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
     }
 
     /**
-     * Logs in a user.
+     * Displays homepage.
      *
      * @return mixed
      */
-    public function actionLogin()
+    public function actionPost($id)
     {
-        if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
-        }
+        $post = $this->findModel($id);
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        } else {
-            return $this->render('login', [
-                'model' => $model,
-            ]);
-        }
-    }
-
-    /**
-     * Logs out the current user.
-     *
-     * @return mixed
-     */
-    public function actionLogout()
-    {
-        Yii::$app->user->logout();
-
-        return $this->goHome();
+        return $this->render('post', [
+            'model' => $post,
+            'comment' => new Comment(),
+            'comments' => $post->getRootPostComments(),
+            'commentTree' => new CommentTree(),
+        ]);
     }
 
     /**
@@ -120,9 +107,8 @@ class SiteController extends Controller
             if ($model->sendEmail(Yii::$app->params['adminEmail'])) {
                 Yii::$app->session->setFlash('success', 'Thank you for contacting us. We will respond to you as soon as possible.');
             } else {
-                Yii::$app->session->setFlash('error', 'There was an error sending email.');
+                Yii::$app->session->setFlash('error', 'There was an error sending your message.');
             }
-
             return $this->refresh();
         } else {
             return $this->render('contact', [
@@ -132,82 +118,65 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays about page.
-     *
-     * @return mixed
+     * @param $id
+     * @return static
      */
-    public function actionAbout()
+    protected function findModel($id)
     {
-        return $this->render('about');
+        if (($model = Post::findOne($id)) !== null) {
+            return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
     }
 
     /**
-     * Signs user up.
-     *
-     * @return mixed
+     * @return array
      */
-    public function actionSignup()
+    public function actionAddComment()
     {
-        $model = new SignupForm();
-        if ($model->load(Yii::$app->request->post())) {
-            if ($user = $model->signup()) {
-                if (Yii::$app->getUser()->login($user)) {
-                    return $this->goHome();
-                }
-            }
+        $comment = new Comment();
+        $commentTree = new CommentTree();
+        $post = Yii::$app->request->post();
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        if (Yii::$app->request->isAjax && $comment->load($post) && $commentTree->load($post) && $comment->validate() && $comment->saveCommentWithTree($commentTree)) {
+            Yii::$app->mailer->compose()
+                ->setTo(Yii::$app->params['adminEmail'])
+                ->setFrom([$post['Comment']['email'] => $post['Comment']['author']])
+                ->setSubject('Comment')
+                ->setTextBody($post['Comment']['content'])
+                ->send();
+            return ['status' => 'success'];
         }
 
-        return $this->render('signup', [
-            'model' => $model,
-        ]);
+        return ['status' => 'error'];
+
     }
 
     /**
-     * Requests password reset.
-     *
-     * @return mixed
+     * @return array
      */
-    public function actionRequestPasswordReset()
+    public function actionValidateComment()
     {
-        $model = new PasswordResetRequestForm();
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            if ($model->sendEmail()) {
-                Yii::$app->session->setFlash('success', 'Check your email for further instructions.');
+        $comment = new Comment();
+        $request = \Yii::$app->getRequest();
 
-                return $this->goHome();
-            } else {
-                Yii::$app->session->setFlash('error', 'Sorry, we are unable to reset password for email provided.');
-            }
+        if (Yii::$app->request->isAjax && $request->isPost && $comment->load($request->post())) {
+            \Yii::$app->response->format = Response::FORMAT_JSON;
+            return ActiveForm::validate($comment);
         }
-
-        return $this->render('requestPasswordResetToken', [
-            'model' => $model,
-        ]);
     }
 
     /**
-     * Resets password.
-     *
-     * @param string $token
-     * @return mixed
-     * @throws BadRequestHttpException
+     * @return string
      */
-    public function actionResetPassword($token)
+    public function actionAddCommentForm()
     {
-        try {
-            $model = new ResetPasswordForm($token);
-        } catch (InvalidParamException $e) {
-            throw new BadRequestHttpException($e->getMessage());
-        }
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $model->resetPassword()) {
-            Yii::$app->session->setFlash('success', 'New password was saved.');
-
-            return $this->goHome();
-        }
-
-        return $this->render('resetPassword', [
-            'model' => $model,
-        ]);
+        $comment = new Comment();
+        $commentTree = new CommentTree();
+        return $this->renderPartial('_comment-form', ['comment' => $comment, 'commentTree' => $commentTree, 'postId' => null, 'ancestorId' => null]);
     }
+
 }

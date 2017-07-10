@@ -11,14 +11,14 @@ return [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
+    'name' => 'Blog',
     'components' => [
+        'user' => [
+            'identityClass' => 'dektrium\user\Module',
+        ],
         'request' => [
             'csrfParam' => '_csrf-frontend',
-        ],
-        'user' => [
-            'identityClass' => 'common\models\User',
-            'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
+            'baseUrl' => '',
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
@@ -36,14 +36,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '/tag/<tag>' => 'site/index',
+                '<controller>' => '<controller>/index',
+                '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

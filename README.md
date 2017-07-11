@@ -129,4 +129,4 @@ Installation
    http://blog/admin
    ```
    
-If you have any problems visit to [Yii2 Documentation](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/README.md) or contact with me.
+If you have any problems visit [Yii2 Documentation](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/README.md) or contact with me.

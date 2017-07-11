@@ -7,11 +7,13 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
+use common\widgets\Alert;
+
 $this->title = Yii::t('app', 'Contact');
 
 ?>
     <h1 class="page-header"><?= Html::encode($this->title) ?></h1>
-
+    <?= Alert::widget() ?>
     <p>
         If you have business inquiries or other questions, please fill out the following form to contact us. Thank you.
     </p>

@@ -1,55 +1,132 @@
-Yii 2 Advanced Project Template
+Blog based on Yii 2 framework
 ===============================
 
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+Application is a simple blog website based on [Yii2 Advanced Project Template](http://www.yiiframework.com/download/)
 
-The template includes three tiers: front end, back end, and console, each of which
-is a separate Yii application.
+Functionality:
+------------------
 
-The template is designed to work in a team development environment. It supports
-deploying the application in different environments.
+#### Admin section
+1. Create\Edit\Hide\Show\Delete posts.
+2. Create\Edit\Delete tags.
+3. Hide\Show\Delete comments.
 
-Documentation is at [docs/guide/README.md](docs/guide/README.md).
+#### Frontend
+1. Searching posts by tags.
+2. View post.
+3. Adding comments.
+4. Sending notifications about comments to page admin.
+4. Contact form.
 
-[![Latest Stable Version](https://poser.pugx.org/yiisoft/yii2-app-advanced/v/stable.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Total Downloads](https://poser.pugx.org/yiisoft/yii2-app-advanced/downloads.png)](https://packagist.org/packages/yiisoft/yii2-app-advanced)
-[![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
+#### Console
+1. Creating account for admin.
 
-DIRECTORY STRUCTURE
+Requirements
+-------------------
+1. PHP > 5.6
+2. Composer
+
+Installation
 -------------------
 
-```
-common
-    config/              contains shared configurations
-    mail/                contains view files for e-mails
-    models/              contains model classes used in both backend and frontend
-    tests/               contains tests for common classes    
-console
-    config/              contains console configurations
-    controllers/         contains console controllers (commands)
-    migrations/          contains database migrations
-    models/              contains console-specific model classes
-    runtime/             contains files generated during runtime
-backend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains backend configurations
-    controllers/         contains Web controller classes
-    models/              contains backend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for backend application    
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-frontend
-    assets/              contains application assets such as JavaScript and CSS
-    config/              contains frontend configurations
-    controllers/         contains Web controller classes
-    models/              contains frontend-specific model classes
-    runtime/             contains files generated during runtime
-    tests/               contains tests for frontend application
-    views/               contains view files for the Web application
-    web/                 contains the entry script and Web resources
-    widgets/             contains frontend widgets
-vendor/                  contains dependent 3rd-party packages
-environments/            contains environment-based overrides
-```
+### 1. Application
+1. Clone or download repository to any folder on your web server.
+2. Inside root folder run the application initialization command.
+
+    ```
+    php init --env=Production --overwrite=All
+    ```
+3. Inside root folder install required composer dependencies.
+
+    ```
+    composer update
+    ```
+    
+### 2. Database
+1. Log to your database and create database.
+
+    ```
+    CREATE SCHEMA `database_name`;
+    ```
+    
+2. Run following migrations inside root folder using terminal:
+
+    ```
+    php yii migrate
+    php yii migrate/up --migrationPath=@vendor/dektrium/yii2-user/migrations
+    ```
+    
+### 3. Configuration
+  
+1. Set your database connection by adjust settings under `components['db']` key in your `common/config/main-local.php` file.
+
+2. Set mailer configuration in `components['mailer']` key in your `frontend/config/main-local.php` file. Example:
+
+    ```
+    'components' => [
+        'mailer' => [
+            'class' => 'yii\swiftmailer\Mailer',
+            'viewPath' => '@frontend/mail',
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'admin@admin.com',
+                'password' => 'password',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
+            'useFileTransport' => false,
+        ],
+    ]
+    ```
+    
+3. Create admin account.
+
+    ```
+    php yii user/create <email> <user_name> <password>
+    ```
+    
+### 4. Setup web server
+1. Add following host configuration to your apache host file and adjust `Directory`, `DocumentRoot` and `ServerName`
+    ```
+    <VirtualHost *:80>
+        ServerName blog.com
+        DocumentRoot /path-to/root/folder/blog
+        <Directory /path-to/root/folder/blog>
+            Options Indexes FollowSymLinks
+            AllowOverride All
+            DirectoryIndex index.php
+            Order allow,deny
+            Allow from all
+        </Directory>
+    </VirtualHost>
+    ```
+    
+5. Change the hosts file to point the domain to your server.
+
+   - for Windows: `c:\Windows\System32\Drivers\etc\hosts`
+   - for Linux: `/etc/hosts`
+
+   Add the following line:
+
+   ```
+   127.0.0.1   blog
+   ```
+   
+### 5. Run application:
+
+1. Noww you can run blog site using following urls:
+   
+   - for frontend:
+   
+   ```
+   http://blog
+   ```
+   
+   - admin section
+   
+   ```
+   http://blog/admin
+   ```
+   
+If you have any problems visit to [Yii2 Documentation](https://github.com/yiisoft/yii2-app-advanced/blob/master/docs/guide/README.md) or contact with me.

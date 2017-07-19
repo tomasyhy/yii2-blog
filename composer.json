@@ -15,7 +15,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "yiisoft/yii2": "~2.0.6",
+        "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
         "dektrium/yii2-user": "0.9.*@dev",
@@ -35,13 +35,15 @@
         "codeception/verify": "~0.3.1"
     },
     "config": {
+        "fxp-asset": {
+            "installer-paths": {
+                "npm-asset-library": "vendor/npm",
+                "bower-asset-library": "vendor/bower"
+            }
+        },
         "process-timeout": 1800
     },
     "extra": {
-        "asset-installer-paths": {
-            "npm-asset-library": "vendor/npm",
-            "bower-asset-library": "vendor/bower"
-        }
     },
     "scripts": {
         "post-install-cmd": "php init --env=Development --overwrite=n"

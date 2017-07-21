@@ -1,6 +1,7 @@
 <?php
 namespace frontend\controllers;
 
+use common\models\User;
 use Yii;
 use yii\base\InvalidParamException;
 use yii\bootstrap\ActiveForm;
@@ -92,6 +93,19 @@ class SiteController extends Controller
             'comment' => new Comment(),
             'comments' => $post->getRootPostComments(),
             'commentTree' => new CommentTree(),
+        ]);
+    }
+
+    /**
+     * Displays About Me.
+     *
+     * @return mixed
+     */
+    public function actionAboutMe()
+    {
+        $admin = User::getAdmin();
+        return $this->render('about', [
+            'model' => $admin,
         ]);
     }
 

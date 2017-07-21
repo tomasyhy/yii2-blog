@@ -25,7 +25,8 @@ NavBar::begin([
             'encodeLabels' => false,
             'items' =>
                 [
-
+                    ['label' => '<span class="glyphicon glyphicon-home" aria-hidden="true"></span> &nbsp' . Yii::t('app', 'Home') , 'url' => '/', 'options' => ['title' => 'Home']],
+                    ['label' => '<span class="glyphicon glyphicon-user" aria-hidden="true"></span> &nbsp' . Yii::t('app', 'About Me') , 'url' => ['about-me'], 'options' => ['title' => 'About Me']],
                     ['label' => '<span class="glyphicon glyphicon-tags" aria-hidden="true"></span> &nbsp' . Yii::t('app', ' Categories'),
                     'items' => $menuItems
                         ],

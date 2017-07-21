@@ -41,8 +41,8 @@ return [
             'showScriptName' => false,
             'rules' => [
                 '/tag/<tag>' => 'site/index',
-                '<controller>' => '<controller>/index',
-                '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
+                '<alias:index|about-me|contact>' => 'site/<alias>',
+                '<controller>/<action>/<id:\d+>' => '<action>',
             ],
         ],
     ],

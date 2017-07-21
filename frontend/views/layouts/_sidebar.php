@@ -10,7 +10,7 @@ use common\models\Tag;
 <?php
 
 NavBar::begin([
-    'brandLabel' => Yii::$app->params['appName'] ?? Yii::$app->name,
+    'brandLabel' => (Yii::$app->params['appName'] ?? Yii::$app->name) . '</br><small>' . Yii::$app->params['author'] . '</small>',
         'options' => [
     'class' => 'navbar navbar-inverse navbar-fixed-side',
 ]]);

@@ -6,11 +6,10 @@ use common\models\{
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use admin\assets\{SummernoteAsset, HighlightAsset, SummernoteHighlightAsset};
+use admin\assets\{SummernoteAsset, HighlightAsset};
 
 SummernoteAsset::register($this);
 HighlightAsset::register($this);
-//SummernoteHighlightAsset::register($this);
 
 ?>
 

@@ -23,6 +23,9 @@ return [
             'enableRegistration' => false,
             'admins' => ['admin'],
             'urlPrefix' => '',
+            'modelMap' => [
+                'User' => 'common\models\User',
+            ],
             'controllerMap' => [
                 'security' => [
                     'class' => 'dektrium\user\controllers\SecurityController',
@@ -43,6 +46,7 @@ return [
             'theme' => [
                 'pathMap' => [
                     '@dektrium/user/views/security' => '@admin/views/site',
+                    '@dektrium/user/views/admin' => '@admin/views/user'
                 ],
             ],
         ],
@@ -65,8 +69,8 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'scriptUrl' => '/admin/index.php',
             'rules' => [
+                'users' => 'user/admin/index',
                 '<controller>' => '<controller>/index',
                 '<controller>/<action>/<id:\d+>' => '<controller>/<action>',
             ]

@@ -157,7 +157,7 @@ class SiteController extends Controller
         if (Yii::$app->request->isAjax && $comment->load($post) && $commentTree->load($post) && $comment->validate() && $comment->saveCommentWithTree($commentTree)) {
             Yii::$app->mailer->compose()
                 ->setTo(Yii::$app->params['adminEmail'])
-                ->setFrom([$post['Comment']['email'] => $post['Comment']['author']])
+                ->setFrom($post['Comment']['email'])
                 ->setSubject('Comment')
                 ->setTextBody($post['Comment']['content'])
                 ->send();

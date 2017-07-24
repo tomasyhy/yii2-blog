@@ -85,6 +85,8 @@ class Tag extends \yii\db\ActiveRecord
             ->select(['COUNT(*) AS quantity', 'name'])
             ->from('tag')
             ->join('join','post_tag', 'post_tag.tag_id = tag.id')
+            ->join('join','post', 'post_tag.post_id = post.id')
+            ->where('post.status = ' . Post::PUBLISHED)
             ->groupBy('tag.id')
             ->all();
     }

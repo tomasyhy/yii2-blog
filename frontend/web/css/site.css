@@ -1,7 +1,7 @@
 html,
 body {
     height: 100%;
-    /*background-color: #f8f8f8;*/
+    font-size: 15px;
 }
 
 .wrap {
@@ -130,8 +130,8 @@ ul.media-list .media-left {
     text-decoration: none !important;
 }
 
-.timeline-item a {
-    color: black !important;
+.timeline-item a, h1 {
+    color: #3D4351 !important;
 }
 
 .blog-main {
@@ -161,9 +161,9 @@ ul.media-list .media-left {
     bottom: 0;
 }
 
-.site-view p {
+.site-view {
     color: #768390 !important;
-
+    font-size: 17px;
 }
 
 .site-view .panel {
@@ -175,6 +175,7 @@ ul.media-list .media-left {
 
 @media (max-width: 768px) {
     .navbar-fixed-side {
+        height: 60px;
         margin-left: -15px;
         margin-right: -15px
     }

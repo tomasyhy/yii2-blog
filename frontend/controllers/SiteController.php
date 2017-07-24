@@ -70,7 +70,7 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $searchModel = new PostSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider = $searchModel->searchTimeline(Yii::$app->request->queryParams);
         $dataProvider->pagination->pageSize = self::PAGE_SIZE;
 
         return $this->render('index', [

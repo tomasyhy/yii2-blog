@@ -1,7 +1,7 @@
 <?php
 return [
     'adminEmail' => 'admin@example.com',
-    'numberOfWordsInBrief' => 150,
+    'numberOfWordsInBrief' => 30,
     'author' => 'Author',
     'appName' => 'Blog'
 

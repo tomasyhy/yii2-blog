@@ -166,6 +166,10 @@ ul.media-list .media-left {
     font-size: 17px;
 }
 
+.timeline-item p {
+    font-size: 15px;
+}
+
 .site-view .panel {
     box-shadow: none !important;
 

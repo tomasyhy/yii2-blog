@@ -40,9 +40,10 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                '<action:\w+>/<id:\d+>' => 'site/<action>',
                 '/tag/<tag>' => 'site/index',
                 '<alias:index|about-me|contact>' => 'site/<alias>',
-                '<controller>/<action>/<id:\d+>' => '<action>',
+
             ],
         ],
     ],

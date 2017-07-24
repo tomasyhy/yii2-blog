@@ -39,7 +39,33 @@ class PostSearch extends Post
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search()
+    {
+        $query = Post::find();
+
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => ['defaultOrder' => ['created_at' => SORT_DESC]],
+
+        ]);
+
+        if (!$this->validate()) {
+            return $dataProvider;
+        }
+
+        return $dataProvider;
+    }
+
+    /**
+     * Creates data provider instance with search query applied
+     *
+     * @param array $params
+     *
+     * @return ActiveDataProvider
+     */
+    public function searchTimeline($params)
     {
         $query = Post::find();
 
@@ -62,16 +88,12 @@ class PostSearch extends Post
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
-            'created_at' => $this->created_at,
-            'status' => $this->status,
+            'status' => Post::PUBLISHED,
         ]);
 
         $searchByTag ? $query->andWhere(['tag.name' => $params['tag']]) : null;
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'content', $this->content])
-        ->andFilterWhere(['like', 'content', $this->content]);
+
 
         return $dataProvider;
     }

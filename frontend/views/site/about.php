@@ -15,10 +15,7 @@ $this->title = Yii::t('app', 'About Me');
 <div class="panel">
     <div class="panel-body">
         <div class="row">
-            <div class="col-lg-5">
                 <?= $model->about_me ?>
-            </div>
         </div>
-
     </div>
 </div>

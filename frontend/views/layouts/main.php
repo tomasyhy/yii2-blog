@@ -16,6 +16,10 @@ AppAsset::register($this);
 <head>
     <meta charset="<?= Yii::$app->charset ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="index,follow">
+    <meta name="keywords" content="<?= Yii::$app->params['author'] ?>,programming,blog,php,zend,jquery,javascript,css,docker,design patterns,linux">
+    <meta name="description" content="Programmer blog. Site contains problems that I faced while programming.">
+    <meta name="author" content="<?= Yii::$app->params['author'] ?>">
     <?= Html::csrfMetaTags() ?>
     <title>        <?= Yii::$app->params['appName'] ?? Yii::$app->name ?></title>
     <?php $this->head() ?>

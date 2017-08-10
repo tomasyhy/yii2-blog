@@ -21,7 +21,7 @@ AppAsset::register($this);
     <meta name="description" content="Programmer blog. Site contains problems that I faced while programming.">
     <meta name="author" content="<?= Yii::$app->params['author'] ?>">
     <?= Html::csrfMetaTags() ?>
-    <title>        <?= Yii::$app->params['appName'] ?? Yii::$app->name ?></title>
+    <title><?= $this->title ?></title>
     <?php $this->head() ?>
 </head>
 <body>

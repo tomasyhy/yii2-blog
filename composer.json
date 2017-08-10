@@ -10,7 +10,7 @@
         "forum": "http://www.yiiframework.com/forum/",
         "wiki": "http://www.yiiframework.com/wiki/",
         "irc": "irc://irc.freenode.net/yii",
-        "source": "https://github.com/yiisoft/yii2"_
+        "source": "https://github.com/yiisoft/yii2"
     },
     "minimum-stability": "stable",
     "require": {
@@ -24,7 +24,8 @@
         "loveorigami/yii2-notification-wrapper": "*",
         "bower-asset/toastr": "^2.1",
         "summernote/summernote": "^0.8.4",
-        "components/highlightjs": "^9.12"
+        "components/highlightjs": "^9.12",
+        "thebingservices/codemirror": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

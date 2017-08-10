@@ -3,7 +3,7 @@ namespace frontend\controllers;
 
 use common\models\User;
 use Yii;
-use yii\base\InvalidParamException;
+use yii\web\NotFoundHttpException;
 use yii\bootstrap\ActiveForm;
 use yii\web\Response;
 use yii\web\Controller;

@@ -6,10 +6,11 @@ use common\models\{
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
-use admin\assets\{SummernoteAsset, HighlightAsset};
-
+use admin\assets\{SummernoteAsset, HighlightAsset, CodemirrorAsset};
+CodemirrorAsset::register($this);
 SummernoteAsset::register($this);
 HighlightAsset::register($this);
+
 
 ?>
 
@@ -44,11 +45,15 @@ HighlightAsset::register($this);
         <div class="row">
             <div class="col-md-offset-2 col-md-10">
                 <?= Html::submitButton($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success']) ?>
+
+                                <?= Html::button($model->isNewRecord ? Yii::t('app', 'Create') : Yii::t('app', 'Update'), ['class' => 'btn btn-success preview-btn']) ?>
+
                 <?= Html::a('Cancel', ['index'], ['class' => 'btn btn-default']) ?>
             </div>
         </div>
     </div>
 
     <?php ActiveForm::end(); ?>
-
+<?php $this->registerJsFile('admin/js/highlight.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
+<?php $this->registerJsFile('admin/js/code-wrap.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>
 <?php $this->registerJsFile('admin/js/post.js', ['depends' => [\yii\web\JqueryAsset::className()]]); ?>

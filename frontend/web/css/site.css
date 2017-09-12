@@ -95,6 +95,11 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
+
+.navbar-header {
+    height: 70px;
+}
+
 .nav li > form > button.logout {
     padding: 15px;
     border: none;

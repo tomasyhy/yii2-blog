@@ -10,11 +10,12 @@ use common\models\Tag;
 <?php
 
 NavBar::begin([
-    'brandLabel' => Yii::$app->params['author'] . ' <small>Programmer Blog</small>',
+    'brandLabel' => Yii::$app->params['author'] . ' <p><small>' . (Yii::$app->params['appName'] ?? Yii::$app->name) . '</small></p>',
     'options' => [
         'class' => 'navbar navbar-inverse navbar-fixed-side',
     ]]);
 ?>
+
 <?php
 $menuItems = [];
 foreach (Tag::getAllWithQuantity() as $tag) {

@@ -7,7 +7,7 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = Yii::t('app', 'About Me');
+$this->title = Yii::t('app', 'About Me'  . ' - ' .(Yii::$app->params['appName'] ?? Yii::$app->name) );
 
 ?>
 <h1 class="page-header"><?= Html::encode($this->title) ?></h1>

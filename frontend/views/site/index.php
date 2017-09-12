@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 TimelineAsset::register($this);
-$this->title = Yii::t('app', 'Posts');
+$this->title = Yii::t('app', (Yii::$app->params['appName'] ?? Yii::$app->name) . ' - ' . Yii::$app->params['owner']);
 
 ?>
 <div class="blog-main">

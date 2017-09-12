@@ -132,6 +132,7 @@ ul.media-list .media-left {
 
 .timeline-item a, h1 {
     color: #3D4351 !important;
+    text-decoration: none;
 }
 
 .blog-main {
@@ -179,7 +180,6 @@ ul.media-list .media-left {
 
 @media (max-width: 768px) {
     .navbar-fixed-side {
-        height: 60px;
         margin-left: -15px;
         margin-right: -15px
     }

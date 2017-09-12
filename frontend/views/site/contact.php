@@ -9,7 +9,7 @@ use yii\bootstrap\ActiveForm;
 use yii\captcha\Captcha;
 use common\widgets\Alert;
 
-$this->title = Yii::t('app', 'Contact');
+$this->title = Yii::t('app', 'Contact' . ' - ' .(Yii::$app->params['appName'] ?? Yii::$app->name));
 
 ?>
     <h1 class="page-header"><?= Html::encode($this->title) ?></h1>

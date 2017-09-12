@@ -9,7 +9,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Comment */
 HighlightAsset::register($this);
-$this->title = StringHelper::truncateWords(strip_tags($model->title), 3);
+$this->title = StringHelper::truncateWords(strip_tags($model->title), 3) . ' - ' .(Yii::$app->params['appName'] ?? Yii::$app->name)
 ?>
 
     <div class="post-content">

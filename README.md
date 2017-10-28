@@ -26,6 +26,13 @@ Requirements
 1. PHP > 5.6
 2. Composer
 
+Screenshots
+-------------------
+![main-page](https://user-images.githubusercontent.com/18007049/32132488-097026e6-bbc5-11e7-85cf-a8851c116a02.jpg)
+![post-update](https://user-images.githubusercontent.com/18007049/32132490-09b3e002-bbc5-11e7-9eb0-7bcca89814a3.jpg)
+![post-content](https://user-images.githubusercontent.com/18007049/32132489-09926d96-bbc5-11e7-984d-329f67d854ca.jpg)
+![admin-panel-posts-list](https://user-images.githubusercontent.com/18007049/32132483-f7939b7e-bbc4-11e7-91ec-ef1112729561.jpg)
+
 Installation
 -------------------
 
